@@ -12,7 +12,7 @@ Have you ever wanted to enable only warnings or errors for specific parts of an 
 import (
 	"log/slog"
 
-	dynamic "github.com/gekatateam/neptunus/dynamic-level-handler"
+	dynamic "github.com/gekatateam/dynamic-level-handler"
 )
 
 // create basic handler

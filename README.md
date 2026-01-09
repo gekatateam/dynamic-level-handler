@@ -34,7 +34,7 @@ pipelineLogger := logger.With(slog.Group("pipeline",
     "id", "cronjobs",
 ))
 // you don't need to think about what specific handler type is passed here
-// this function only does something if handler type is `DynamicLevelHandler`
+// this function only do something if handler type is `DynamicLevelHandler`
 dynamic.OverrideLevel(pipelineLogger.Handler(), slog.LevelWarn)
 
 ......

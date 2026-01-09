@@ -1,4 +1,4 @@
-package logger
+package dynamiclevelhandler
 
 import (
 	"context"
@@ -10,12 +10,14 @@ var _ slog.Handler = (*DynamicLevelHandler)(nil)
 
 const LevelUnassigned slog.Level = math.MaxInt
 
-func OverrideLevel(h slog.Handler, newLevel slog.Leveler) {
+func OverrideLevel(h slog.Handler, newLevel slog.Leveler) (applied bool) {
 	if dlh, ok := h.(*DynamicLevelHandler); ok {
 		if newLevel != nil {
 			dlh.Override(newLevel)
+			return true
 		}
 	}
+	return false
 }
 
 func New(h slog.Handler) *DynamicLevelHandler {
@@ -32,6 +34,10 @@ type DynamicLevelHandler struct {
 
 func (h *DynamicLevelHandler) Override(newLevel slog.Leveler) {
 	h.assignedLevel = newLevel
+}
+
+func (h *DynamicLevelHandler) Reset() {
+	h.assignedLevel = LevelUnassigned
 }
 
 func (h *DynamicLevelHandler) Handle(ctx context.Context, record slog.Record) error {
